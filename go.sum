@@ -1,0 +1,4 @@
+github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
+github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
+github.com/minherz/metadataserver v0.0.0-20250429012916-b2243b95d6c1 h1:Wp7YV5cDB+LMAh1MxU//bsp017rS+Al1nzEkco5Momg=
+github.com/minherz/metadataserver v0.0.0-20250429012916-b2243b95d6c1/go.mod h1:iDgcjmYgegLcVDnQCcVf9TouVijpf7gsdCzJv095Fwg=
