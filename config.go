@@ -12,13 +12,6 @@ import (
 
 const undefinedStringFlag = "_undefined_"
 
-type configuration struct {
-	IPAddress string
-	Port      int
-	Endpoint  string
-	Metadata  map[string]metadataserver.Metadata
-}
-
 type metadataTuple struct {
 	path  string
 	value string
