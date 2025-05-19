@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -10,8 +11,6 @@ import (
 
 	"github.com/minherz/metadataserver"
 )
-
-const undefinedStringFlag = "_undefined_"
 
 func main() {
 	ctx := context.Background()
@@ -25,25 +24,20 @@ func run(ctx context.Context) error {
 	ctx, stop := signal.NotifyContext(ctx, os.Interrupt)
 	defer stop()
 
-	file := flag.String("config", undefinedStringFlag, "Path to configuration file")
-	address := flag.String("address", metadataserver.DefaultAddress, "Serving address")
-	port := flag.Int("port", metadataserver.DefaultPort, "Port to listen for requests")
-
-	flag.Parse()
-
-	ops := []metadataserver.Option{}
-	if *file != undefinedStringFlag {
-		ops = append(ops, metadataserver.WithConfigFile(*file))
-	} else {
-		ops = append(ops, metadataserver.WithAddress(*address), metadataserver.WithPort(*port))
+	ops, err := ConfigOptions()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to setup server: %s", err.Error())
+		flag.Usage()
+		return nil
 	}
 	srv, err := metadataserver.New(ops...)
 	if err != nil {
 		slog.Error("failed to create new server", slog.String("error", err.Error()))
 		return err
 	}
-	srv.Start()
-
+	if err := srv.Start(context.Background()); err != nil {
+		return err
+	}
 	// wait for interrupt and gracefully stop web server after 5 sec
 	<-ctx.Done()
 	shutdownCtx := context.Background()
