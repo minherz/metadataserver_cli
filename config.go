@@ -5,12 +5,16 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/minherz/metadataserver"
 )
 
 const undefinedStringFlag = "_undefined_"
+
+// matches '[/](word/)*word[/]'
+var metadataKeyRegexp, _ = regexp.Compile(`^\/?(\w+/)*(\w+)\/?$`)
 
 type metadataTuple struct {
 	path  string
@@ -33,10 +37,17 @@ func (v *MetadataFlagSlice) String() string {
 	return strings.Join(s, ", ")
 }
 
+func MetadataFlagSliceKeyError(key string) error {
+	return fmt.Errorf("metadata bad key: %s", key)
+}
+
 func (v *MetadataFlagSlice) Set(value string) error {
 	s := strings.Split(value, "=")
 	if len(s) != 2 {
 		return errors.New("cannot parse metadata tuple: " + value)
+	}
+	if !metadataKeyRegexp.Match([]byte(s[0])) {
+		return MetadataFlagSliceKeyError(s[0])
 	}
 	*v = append(*v, metadataTuple{
 		path:  s[0],
@@ -54,8 +65,8 @@ func ConfigOptions() ([]metadataserver.Option, error) {
 		metadataValues  MetadataFlagSlice
 		metadataEnvVars MetadataFlagSlice
 	)
-	flag.Var(&metadataValues, "", "A metadata path that returns a literal")
-	flag.Var(&metadataEnvVars, "", "A metadata path that returns value of an environment variable")
+	flag.Var(&metadataValues, "metadata", "A metadata path that returns a literal")
+	flag.Var(&metadataEnvVars, "metadata-env", "A metadata path that returns value of an environment variable")
 
 	flag.Parse()
 

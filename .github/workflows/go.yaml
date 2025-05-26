@@ -66,7 +66,7 @@ jobs:
         run: |
           go vet ./...
   test:
-    name: Root tests
+    name: Unit tests
     runs-on: ubuntu-latest
     permissions: {contents: read}
     steps:
@@ -93,3 +93,20 @@ jobs:
           go test -race -covermode=atomic -coverprofile=coverage.out
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+  smoke-test:
+    name: Smoke test
+    runs-on: ubuntu-latest
+    permissions: {contents: read}
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Check code
+        uses: actions/checkout@v4
+      - name: Build code
+        run: |
+          go build ./...
+      - name: Run test
+        run: |
+          test/test_server_e2e.sh

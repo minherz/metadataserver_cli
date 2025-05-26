@@ -1,8 +1,9 @@
 <!-- markdownlint-disable MD033 -->
 # Metadata Server CLI
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/minherz/metadataserver_cli)](https://goreportcard.com/report/github.com/minherz/metadataserver_cli)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/minherz/metadataserver_cli)](https://github.com/minherz/metadataserver_cli/releases)
 [![Build](https://github.com/minherz/metadataserver_cli/actions/workflows/go.yaml/badge.svg)](https://github.com/minherz/metadataserver_cli/actions/workflows/go.yaml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/minherz/metadataserver_cli)](https://goreportcard.com/report/github.com/minherz/metadataserver_cli)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/minherz/metadataserver_cli)](https://pkg.go.dev/github.com/minherz/metadataserver_cli)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/minherz/metadataserver_cli?label=go-version)
 ![Repo license](https://badgen.net/badge/license/Apache%202.0/blue)
